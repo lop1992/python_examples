@@ -1,0 +1,27 @@
+import requests
+
+# 发送文件
+def post(url,param_dict,param_header,file = None,param_type = 'x-www-form-urlencode'):
+    '''
+    @功能：封装post方式
+    @paramType:指传入参数类型，可以是form-data、x-www-form-urlencode、json
+    '''
+    respone_code = None
+    respone = None
+    try:
+        if param_type == 'x-www-form-urlencode':
+            params = param_dict
+        elif param_type == 'json':
+            params = json.dumps(param_dict)
+        if not file :
+            ret = requests.post(url, data=params, headers=param_header)
+        else:
+            files = {'file':file}
+            ret = requests.post(url, data=params, headers=param_header,files = files)
+        respone_code = ret.status_code
+        respone = ret.text
+    except requests.HTTPError as e:
+        respone_code = e.getcode()
+        respone = e.read().decode("utf-8")
+
+    return respone_code,respone
