@@ -1,3 +1,6 @@
+from win32gui import FindWindow
+import win32gui, win32ui, win32con, win32api
+
 # 对指定窗口进行截图  使用win32对指定程序截图
 def window_capture(filename,tittle):
     # hwnd = 0  # 窗口的编号，0号表示当前活跃窗口
